@@ -1,0 +1,908 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>CIVL3520 Exam Sprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: site-office drafting sheet. Sticky tab bar, one reading column, node-box diagrams drawn like the lecturer's. */
+:root{
+  --bg:#EDF0F2; --surface:#FFFFFF; --ink:#13202A; --muted:#566571; --line:#CBD3DA; --soft:#E3E8EC;
+  --accent:#D9530F; --accent-ink:#FFFFFF; --crit:#C42B2B; --ok:#23803A; --warn:#A86A00; --tint:#FBEDE5; --oktint:#E3F2E6; --crittint:#F9E3E3;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E151B; --surface:#16202A; --ink:#E4EBF0; --muted:#97A6B2; --line:#2B3A46; --soft:#1D2A35;
+  --accent:#FF8A45; --accent-ink:#1A0D05; --crit:#FF6E6E; --ok:#5CCB76; --warn:#E3B04B; --tint:#2D1E15; --oktint:#15291B; --crittint:#2E1818; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E151B; --surface:#16202A; --ink:#E4EBF0; --muted:#97A6B2; --line:#2B3A46; --soft:#1D2A35;
+  --accent:#FF8A45; --accent-ink:#1A0D05; --crit:#FF6E6E; --ok:#5CCB76; --warn:#E3B04B; --tint:#2D1E15; --oktint:#15291B; --crittint:#2E1818; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);
+  background-image:linear-gradient(var(--soft) 1px,transparent 1px),linear-gradient(90deg,var(--soft) 1px,transparent 1px);background-size:22px 22px}
+header.top .wrap{padding-block:28px 22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
+h1{font-size:clamp(34px,7vw,52px);font-weight:700;letter-spacing:.01em}
+h2{font-size:30px;font-weight:700;margin-top:8px}
+h3{font-size:22px;font-weight:600;margin-top:4px}
+p{margin:0}
+.lede{max-width:62ch;color:var(--muted);margin-top:10px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:0;scrollbar-width:none}
+nav.tabs button{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:.02em;background:none;border:0;color:var(--muted);
+  padding:12px 12px 10px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs button:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main .wrap{padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+section.view{display:flex;flex-direction:column;gap:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.marks{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.marks td,.marks th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.marks th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.marks td.n{text-align:right;font-family:var(--mono);font-weight:600}
+.bar{height:8px;background:var(--soft);border-radius:4px;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.scroll{overflow-x:auto;max-width:100%}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--muted);vertical-align:middle}
+.pill.hot{background:var(--tint);color:var(--accent)}
+.pill.crit{background:var(--crittint);color:var(--crit)}
+.pill.ok{background:var(--oktint);color:var(--ok)}
+.day{display:flex;flex-direction:column;gap:10px}
+.day h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.day h3 small{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:400}
+.task{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.task input{width:20px;height:20px;margin-top:3px;accent-color:var(--accent)}
+.task .t{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+.task b{display:block}
+.task .d{color:var(--muted);font-size:15px}
+.task.done b{text-decoration:line-through;color:var(--muted)}
+.progress{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:13px}
+.progress .bar{flex:1;height:10px}
+.note{border-left:3px solid var(--accent);background:var(--tint);padding:12px 14px;border-radius:0 6px 6px 0}
+.note.crit{border-color:var(--crit);background:var(--crittint)}
+.note.ok{border-color:var(--ok);background:var(--oktint)}
+.f{font-family:var(--mono);font-size:14.5px;background:var(--soft);padding:10px 12px;border-radius:4px;overflow-x:auto;white-space:pre;line-height:1.7}
+code{font-family:var(--mono);font-size:.9em;background:var(--soft);padding:1px 5px;border-radius:3px}
+ul,ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:6px}
+details.mod>summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+details.mod>summary::-webkit-details-marker{display:none}
+details.mod>summary .ttl{display:flex;flex-direction:column;gap:2px;min-width:0}
+details.mod>summary .ttl span{color:var(--muted);font-size:14px}
+details.mod>summary::after{content:"+";font-family:var(--mono);font-size:22px;color:var(--accent)}
+details.mod[open]>summary::after{content:"−"}
+details.mod .body{padding:0 20px 22px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line);padding-top:18px}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;padding-left:34px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--surface);font-family:var(--mono);font-size:12px;display:grid;place-items:center}
+table.t{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14.5px;width:100%}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 9px;text-align:center}
+table.t th{background:var(--soft);font-weight:600}
+table.t td.l,table.t th.l{text-align:left}
+table.t tr.cp td{color:var(--crit);font-weight:600}
+svg.net{width:100%;height:auto;display:block;min-width:560px}
+svg.net text{font-family:var(--mono);fill:var(--ink)}
+.netbox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:8px}
+.cap{font-size:13px;color:var(--muted)}
+/* quiz */
+.qbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.qbar select,.qbar button,.btn{font-family:var(--body);font-size:15px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.score{font-family:var(--mono);font-size:14px;margin-left:auto}
+.q{display:flex;flex-direction:column;gap:10px}
+.q .qh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.q .qn{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:var(--body);font-size:15.5px;line-height:1.45;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer;display:grid;grid-template-columns:24px 1fr;gap:8px}
+.opt:hover{border-color:var(--muted)}
+.opt .k{font-family:var(--mono);font-weight:600;color:var(--muted)}
+.opt.right{border-color:var(--ok);background:var(--oktint)}
+.opt.wrong{border-color:var(--crit);background:var(--crittint)}
+.opt[disabled]{cursor:default}
+.why{font-size:15px;padding:10px 12px;border-radius:6px;background:var(--soft)}
+.gen{display:flex;flex-direction:column;gap:10px}
+.gen .vals{font-family:var(--mono);font-size:15px;display:flex;flex-wrap:wrap;gap:8px 18px}
+.ans{font-family:var(--mono);font-size:14.5px;line-height:1.75;background:var(--soft);padding:10px 12px;border-radius:4px;overflow-x:auto;white-space:pre}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+footer{color:var(--muted);font-size:13px;text-align:center;padding-block:24px}
+@media (max-width:520px){ .card{padding:16px} details.mod .body{padding-left:16px;padding-right:16px} details.mod>summary{padding:14px 16px} h2{font-size:26px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="eyebrow">CIVL3520 · Project Management &amp; Professional Practice</div>
+  <h1>Exam Sprint: 48 hours, zero to pass</h1>
+  <p class="lede">Built from your lectures, both tutorial sets, the 2026 practice exam and the 2023 paper. The final follows the practice exam's scope exactly (Lecture 12 says so), so this guide is aimed squarely at that paper.</p>
+</div></header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap" role="tablist">
+  <button role="tab" data-v="plan">Plan</button>
+  <button role="tab" data-v="learn">Learn</button>
+  <button role="tab" data-v="formulas">Formulas</button>
+  <button role="tab" data-v="drill">MCQ drill</button>
+  <button role="tab" data-v="numbers">Number drills</button>
+  <button role="tab" data-v="papers">2023 solutions</button>
+</div></nav>
+
+<main><div class="wrap">
+
+<!-- ============ PLAN ============ -->
+<section class="view" id="v-plan">
+  <div class="card">
+    <div class="eyebrow">What you are walking into</div>
+    <h2>120 minutes, closed book, 100 marks</h2>
+    <p>10 minutes planning time. Casio FX82 only. <b>The only formulas given are PERT (te and variance), the TVM sheet and the normal table.</b> Everything else (EVM, EMV, crash slope, float rules) you must memorise.</p>
+    <div class="scroll"><table class="marks">
+      <thead><tr><th>Question</th><th>Topic</th><th>Marks</th><th style="width:30%">Weight</th></tr></thead>
+      <tbody>
+        <tr><td>Q45</td><td><b>Earned value + risk EMV</b> <span class="pill hot">biggest</span></td><td class="n">26</td><td><div class="bar"><i style="width:65%"></i></div></td></tr>
+        <tr><td>Q1–40</td><td>Multiple choice, 1 mark each (theory)</td><td class="n">40</td><td><div class="bar"><i style="width:100%"></i></div></td></tr>
+        <tr><td>Q41</td><td>Time value of money (loan, NPV, balance)</td><td class="n">13</td><td><div class="bar"><i style="width:32.5%"></i></div></td></tr>
+        <tr><td>Q42</td><td>CPM precedence network with lags</td><td class="n">8</td><td><div class="bar"><i style="width:20%"></i></div></td></tr>
+        <tr><td>Q43</td><td>PERT duration and probability</td><td class="n">8</td><td><div class="bar"><i style="width:20%"></i></div></td></tr>
+        <tr><td>Q44</td><td>Crashing (time–cost trade-off)</td><td class="n">5</td><td><div class="bar"><i style="width:12.5%"></i></div></td></tr>
+      </tbody></table></div>
+    <div class="note"><b>The big insight.</b> Part B is 60 marks of the same five calculations every time. They are procedures, and procedures can be learned in a day. Q45 alone (26 marks) is mostly subtraction and division. Nail Part B and the MCQs only need to be decent.</div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Your 48-hour plan</div>
+    <h2>Tick it off as you go</h2>
+    <p class="cap">Times assume an exam around Tuesday evening. If yours is earlier on Tuesday, drop block 9's timed run and do it Monday night instead. Ticks are saved in this browser.</p>
+    <div class="progress"><span id="pct">0%</span><div class="bar"><i id="pbar" style="width:0%"></i></div><button class="btn" id="resetPlan" type="button">Reset</button></div>
+    <div id="plan"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">In the exam room</div>
+    <h3>Spend the 120 minutes like this</h3>
+    <ol>
+      <li><b>Planning time (10 min):</b> read Q45 and Q41. Write down the EVM formulas and the float rules in the margin before you forget them.</li>
+      <li><b>Q45 first (~30 min):</b> 26 marks, mostly arithmetic. Every sub-part reuses earlier numbers, so be neat.</li>
+      <li><b>Q41 TVM (~18 min)</b>, then <b>Q42 → Q43 → Q44</b> (~35 min together; they chain off the same network).</li>
+      <li><b>MCQs (~35 min):</b> under a minute each. Never leave one blank.</li>
+      <li>Write units, state assumptions, show the formula before the numbers. The paper says unsubstantiated answers are not assessed.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ LEARN ============ -->
+<section class="view" id="v-learn" hidden>
+  <div class="card">
+    <div class="eyebrow">Learn</div>
+    <h2>Nine lessons, in mark order</h2>
+    <p>Open each lesson, read it once, then do the linked past-paper question from a blank page before looking at the answer. Lessons 1–6 are Part B. Lessons 7–9 feed the MCQs.</p>
+  </div>
+  <div id="lessons" style="display:flex;flex-direction:column;gap:12px"></div>
+</section>
+
+<!-- ============ FORMULAS ============ -->
+<section class="view" id="v-formulas" hidden>
+  <div class="card">
+    <div class="eyebrow">Memorise these</div>
+    <h2>Not on the formula sheet</h2>
+    <p>Write this whole card from memory twice before the exam. If you can, you are ready for Part B.</p>
+    <h3>Earned value</h3>
+    <div class="f">CV  = EV − AC          (− = over budget)
+SV  = EV − PV          (− = behind schedule)
+CPI = EV / AC          (&lt;1 = over budget)
+SPI = EV / PV          (&lt;1 = behind)
+EV  = % complete × BAC
+
+EAC = BAC / CPI              current efficiency continues
+EAC = AC + (BAC − EV)        problem was one-off, back to plan
+EAC = AC + bottom-up ETC     new detailed estimate
+ETC = EAC − AC
+Required CPI = (BAC − EV) / (money left for remaining work)</div>
+    <h3>Risk</h3>
+    <div class="f">EMV = probability × impact    (threat +, opportunity −)
+Net EMV = Σ EMV
+Risk-adjusted EAC = base EAC + net EMV
+Response expected cost = certain cost + p_new × impact_new</div>
+    <h3>CPM with lags (forward pass, take the MAX)</h3>
+    <div class="f">FS/x : ES_j ≥ EF_i + x
+SS/x : ES_j ≥ ES_i + x
+FF/x : EF_j ≥ EF_i + x   →  ES_j ≥ EF_i + x − d_j
+ES never below 0.  Project end = largest EF of ANY activity.</div>
+    <h3>Backward pass (take the MIN)</h3>
+    <div class="f">FS/x : LF_i ≤ LS_j − x
+SS/x : LS_i ≤ LS_j − x   →  LF_i ≤ LS_j − x + d_i
+FF/x : LF_i ≤ LF_j − x
+LF never above project end.   TF = LS − ES = LF − EF</div>
+    <h3>Free float (smallest gap to any successor)</h3>
+    <div class="f">FS/x gap = ES_j − EF_i − x
+SS/x gap = ES_j − ES_i − x
+FF/x gap = EF_j − EF_i − x
+No successor: FF = project end − EF_i</div>
+    <h3>PERT probability</h3>
+    <div class="f">σ_project = √(Σ variances on critical path)     ← add VARIANCES, not σ
+z = (T − μ) / σ
+P(finish ≤ T) = 0.5 + table(z)   if T &gt; μ
+              = 0.5 − table(|z|) if T &lt; μ
+Target confidence: 90% → table 0.40 → z ≈ 1.28 → T = μ + 1.28σ</div>
+    <h3>Crashing</h3>
+    <div class="f">slope = (crash cost − normal cost) / (normal dur − crash dur)
+Total cost = direct + overhead/day × duration
+Crash while  slope (combined) &lt; overhead per day saved</div>
+    <h3>Estimating &amp; selection</h3>
+    <div class="f">Capacity factor:  C_new = C_old × (Q_new / Q_old)^e
+Escalation:       C_future = C_now × (1 + r)^n
+Location:         × (index_new / index_old)
+Payback period:   time until cumulative inflows = investment
+Burgess:          smoothness = Σ R²  (lower is smoother)</div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Given in the exam</div>
+    <h3>You will have these, but know how to use them</h3>
+    <div class="f">te = (o + 4m + p) / 6        σ² = ((p − o) / 6)²
+
+i = rate per period (6% p.a. monthly → 0.06/12 = 0.005), n = number of periods
+FV  = −PV (1+i)^n
+PV  = −FV / (1+i)^n
+PV  = −PMT [1 − (1+i)^−n] / i
+FV  = −PMT [(1+i)^n − 1] / i
+PMT = −i·PV / [1 − (1+i)^−n]
+PMT = −i·FV / [(1+i)^n − 1]
+n   = ln[(1 + i·PV/PMT)^−1] / ln(1+i)
+n   = ln[1 − i·FV/PMT] / ln(1+i)
+Received = +, paid = −.  The minus signs only flip direction.</div>
+  </div>
+</section>
+
+<!-- ============ DRILL ============ -->
+<section class="view" id="v-drill" hidden>
+  <div class="card">
+    <div class="eyebrow">MCQ drill</div>
+    <h2>All 80 past multiple-choice questions</h2>
+    <p>The 2026 practice answers are the official key. The 2023 paper had no key, so those are worked answers; four marked <span class="pill">judgement</span> are PMBOK-style calls where two options are defensible.</p>
+    <div class="qbar">
+      <select id="qPaper" aria-label="Paper"><option value="all">Both papers</option><option value="P26">2026 practice</option><option value="X23">2023 exam</option></select>
+      <select id="qTopic" aria-label="Topic"></select>
+      <button type="button" id="qWrong">Only my misses</button>
+      <button type="button" id="qReset">Clear answers</button>
+      <span class="score" id="qScore"></span>
+    </div>
+  </div>
+  <div id="quiz" style="display:flex;flex-direction:column;gap:14px"></div>
+</section>
+
+<!-- ============ NUMBER DRILLS ============ -->
+<section class="view" id="v-numbers" hidden>
+  <div class="card">
+    <div class="eyebrow">Number drills</div>
+    <h2>Unlimited fresh practice</h2>
+    <p>Each press makes a new problem. Work it on paper with your calculator, then reveal. Ten clean EVM drills in a row means Q45a–b are banked.</p>
+  </div>
+  <div class="card gen" id="g-evm"></div>
+  <div class="card gen" id="g-emv"></div>
+  <div class="card gen" id="g-tvm"></div>
+  <div class="card gen" id="g-pert"></div>
+</section>
+
+<!-- ============ PAPERS ============ -->
+<section class="view" id="v-papers" hidden>
+  <div class="card">
+    <div class="eyebrow">2023 Semester 2 exam</div>
+    <h2>Worked solutions for Part B</h2>
+    <p>No official solutions were released for this paper, so these are worked from the lecture methods and checked by calculation. Try each one first. The 2023 paper had different topics (payback, cost estimating, Burgess levelling), which is good extra practice, but your final follows the 2026 practice layout.</p>
+  </div>
+  <div id="papers" style="display:flex;flex-direction:column;gap:12px"></div>
+</section>
+
+</div></main>
+<footer><div class="wrap">Made for one student's CIVL3520 sprint. Check anything that looks off against your lecture slides.</div></footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const fmt=(x,d=2)=>Number(x).toLocaleString("en-AU",{minimumFractionDigits:d,maximumFractionDigits:d});
+
+/* ---------- routing ---------- */
+const views=["plan","learn","formulas","drill","numbers","papers"];
+function show(v){if(!views.includes(v))v="plan";views.forEach(x=>{$("#v-"+x).hidden=x!==v});
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v?"true":"false"));}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{location.hash=b.dataset.v;show(b.dataset.v);window.scrollTo({top:0})}));
+window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
+show(location.hash.slice(1));
+
+/* ---------- plan ---------- */
+const PLAN=[
+ {day:"Sunday night",sub:"now → midnight, ~1.5 h",items:[
+  ["t1","22:30","Read the Plan tab, then Lesson 1 (EVM)","Learn what PV, EV and AC mean. Do 3 EVM number drills."],
+  ["t2","23:15","Practice exam Q45 a–b from a blank page","Then compare with the official solutions PDF. Sleep by 00:30; memory consolidates overnight."]]},
+ {day:"Monday",sub:"the main day, ~10 h",items:[
+  ["m1","08:30","Lesson 2 (risk EMV) + finish practice Q45 c–f","Redo all of Q45 cleanly in ~30 min. Then 2023 Q44 (ETC from CPI/SPI)."],
+  ["m2","10:30","Lesson 3 (TVM) + practice Q41","Then the lecture examples: $1M at 10% over 8 years, balance after 4 years ($598,289), toll bridge n = 41.8 years."],
+  ["m3","12:30","Lunch, then 5 TVM drills","Short break. Do the drills on your actual Casio."],
+  ["m4","13:30","Lesson 4 (CPM with lags)","Tut 1 Q1 and Q2 (plain FS) first, then Tut 1 Q3 and Q4 (lags), then practice Q42. Compare with the diagrams."],
+  ["m5","15:30","Lesson 5 (PERT) + Tut 2 Q1, practice Q43","Learn to read the z-table both ways (probability from T, and T from a target %)."],
+  ["m6","17:00","Lesson 6 (crashing) + Tut 2 Q3, practice Q44","Notice why the practice exam crashes B+C and not A (the SS link)."],
+  ["m7","18:00","Dinner","Walk away from the desk."],
+  ["m8","19:00","Lesson 7 (levelling) + 2023 Q45 and Q47","2023 Q45 is a harder lag network. Check against the 2023 solutions tab."],
+  ["m9","20:30","Lessons 8–9 (theory) + 2026 MCQ drill","Read the theory notes, then all 40 practice MCQs. Note every miss."],
+  ["m10","22:00","Write the Formulas card from memory","Check it against the Formulas tab. Sleep by 23:00."]]},
+ {day:"Tuesday",sub:"exam day",items:[
+  ["e1","Morning","2023 MCQ drill, then 'Only my misses' on both papers","Re-read the theory notes for whichever topics you missed."],
+  ["e2","+2 h","Timed run: practice exam Part B in 75 min","Closed book, calculator only. Mark it against the solutions."],
+  ["e3","+1 h","Fix weak spots","Redo whichever question lost the most marks. One more EVM and PERT drill."],
+  ["e4","Last hour","Formula card once more, then stop","Eat, pack calculator (Casio FX82), arrive early. No new material."]]}
+];
+function renderPlan(){const done=store.get("civl-plan",{});let html="",n=0,c=0;
+ PLAN.forEach(d=>{html+=`<div class="day"><h3>${d.day} <small>${d.sub}</small></h3>`;
+  d.items.forEach(([id,t,b,desc])=>{n++;if(done[id])c++;
+   html+=`<label class="task${done[id]?" done":""}"><input type="checkbox" id="${id}" ${done[id]?"checked":""}><span><span class="t">${t}</span><b>${b}</b><span class="d">${desc}</span></span></label>`});html+="</div>"});
+ $("#plan").innerHTML=html;$("#plan").style.cssText="display:flex;flex-direction:column;gap:18px";
+ const p=Math.round(100*c/n);$("#pct").textContent=p+"%";$("#pbar").style.width=p+"%";
+ $("#plan").querySelectorAll("input").forEach(i=>i.addEventListener("change",()=>{const s=store.get("civl-plan",{});s[i.id]=i.checked;store.set("civl-plan",s);renderPlan()}));}
+$("#resetPlan").addEventListener("click",()=>{store.set("civl-plan",{});renderPlan()});
+renderPlan();
+
+/* ---------- network diagram renderer ---------- */
+function net(nodes,links,W,H,label){
+ const bw=34,bh=20,BW=bw*3,BH=bh*3;const N={};nodes.forEach(n=>N[n.id]=n);
+ let s=`<svg class="net" viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}">`;
+ s+=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--crit)"/></marker></defs>`;
+ let labels="";
+ links.forEach(l=>{const a=N[l.f],b=N[l.t];const x1=a.x+BW,y1=a.y+BH/2+(l.sy||0),x2=b.x,y2=b.y+BH/2+(l.ty||0),mx=l.mx;
+  const col=l.c?"var(--crit)":"var(--muted)";
+  s+=`<path d="M${x1},${y1} H${mx} V${y2} H${x2-1}" fill="none" stroke="${col}" stroke-width="${l.c?2.2:1.3}" marker-end="url(#${l.c?"ahc":"ah"})"/>`;
+  const lx=l.lx??mx,ly=l.ly??(y1+y2)/2;const w=l.lab.length*7.4+8;
+  labels+=`<rect x="${lx-w/2}" y="${ly-9}" width="${w}" height="16" rx="3" fill="var(--surface)" stroke="${col}" stroke-width="0.8"/><text x="${lx}" y="${ly+3.5}" font-size="11" text-anchor="middle" style="fill:${col}">${l.lab}</text>`;});
+ nodes.forEach(n=>{const col=n.c?"var(--crit)":"var(--ink)";const cells=[[n.num,n.name,n.d],[n.es,n.tf,n.ef],[n.ls,n.ff,n.lf]];
+  for(let r=0;r<3;r++)for(let k=0;k<3;k++){const sh=(r>0&&k===1);
+   s+=`<rect x="${n.x+k*bw}" y="${n.y+r*bh}" width="${bw}" height="${bh}" fill="${sh?"var(--soft)":"var(--surface)"}" stroke="${col}" stroke-width="${n.c?1.8:1}"/>`;
+   s+=`<text x="${n.x+k*bw+bw/2}" y="${n.y+r*bh+14}" font-size="12" text-anchor="middle" font-weight="${r===0&&k===1?700:400}" style="fill:${(r===0&&k===1&&n.c)?"var(--crit)":"var(--ink)"}">${cells[r][k]}</text>`;}});
+ return s+labels+"</svg>";}
+const legendNode=`<div class="legend"><span>Node: <code># | Act | Dur</code> / <code>ES | TF | EF</code> / <code>LS | FF | LF</code> (shaded = floats)</span><span style="color:var(--crit)">Red = critical (TF = 0)</span></div>`;
+
+const NET42=net([
+ {id:"A",num:1,name:"A",d:6,es:0,tf:0,ef:6,ls:0,ff:0,lf:6,x:10,y:120,c:1},
+ {id:"B",num:2,name:"B",d:5,es:2,tf:5,ef:7,ls:7,ff:5,lf:12,x:180,y:20},
+ {id:"C",num:3,name:"C",d:4,es:5,tf:0,ef:9,ls:5,ff:0,lf:9,x:180,y:210,c:1},
+ {id:"D",num:4,name:"D",d:7,es:9,tf:0,ef:16,ls:9,ff:0,lf:16,x:360,y:250,c:1},
+ {id:"E",num:5,name:"E",d:3,es:11,tf:2,ef:14,ls:13,ff:2,lf:16,x:530,y:110}],
+ [{f:"A",t:"B",lab:"SS/2",sy:-10,mx:146,c:1},{f:"A",t:"C",lab:"FS/−1",sy:10,mx:146,c:1},
+  {f:"B",t:"D",lab:"FF/4",sy:10,ty:-12,mx:335},{f:"C",t:"D",lab:"FS/0",ty:8,mx:315,ly:262,c:1},
+  {f:"B",t:"E",lab:"SS/0",sy:-10,ty:-12,mx:500},{f:"C",t:"E",lab:"FS/1",sy:-10,mx:470,lx:400,ly:230},
+  {f:"D",t:"E",lab:"FF/−2",ty:12,mx:510}],650,330,"Practice exam Q42 precedence network");
+
+const NET23=net([
+ {id:"A",num:1,name:"A",d:3,es:0,tf:2,ef:3,ls:2,ff:1,lf:5,x:10,y:10},
+ {id:"B",num:2,name:"B",d:9,es:0,tf:0,ef:9,ls:0,ff:0,lf:9,x:10,y:110,c:1},
+ {id:"C",num:3,name:"C",d:5,es:0,tf:0,ef:5,ls:0,ff:0,lf:5,x:10,y:210,c:1},
+ {id:"D",num:4,name:"D",d:11,es:0,tf:0,ef:11,ls:0,ff:0,lf:11,x:10,y:310,c:1},
+ {id:"E",num:5,name:"E",d:10,es:0,tf:5,ef:10,ls:5,ff:5,lf:15,x:250,y:60},
+ {id:"F",num:6,name:"F",d:7,es:5,tf:0,ef:12,ls:5,ff:0,lf:12,x:250,y:220,c:1},
+ {id:"G",num:7,name:"G",d:4,es:11,tf:0,ef:15,ls:11,ff:0,lf:15,x:490,y:170,c:1}],
+ [{f:"A",t:"E",lab:"FF/6",ty:-10,mx:180},{f:"A",t:"F",lab:"FF/7",sy:10,ty:-10,mx:200,ly:170},
+  {f:"C",t:"F",lab:"FF/7",ty:5,mx:220,ly:272,c:1},{f:"A",t:"G",lab:"SS/8",sy:-15,ty:-20,mx:420,ly:110},
+  {f:"B",t:"G",lab:"SS/11",ty:-8,mx:440,ly:150,c:1},{f:"D",t:"G",lab:"FF/4",ty:20,mx:455,ly:300,c:1},
+  {f:"E",t:"G",lab:"SS/4",ty:-14,mx:400,ly:140},{f:"F",t:"G",lab:"SS/6",ty:8,mx:385,ly:262,c:1}],610,390,"2023 exam Q45 precedence network");
+
+/* ---------- lessons ---------- */
+const LESSONS=[
+{t:"1 · Earned value management",s:"Q45 a–b, e, f · 26-mark question · MCQs 38–40",open:true,h:`
+<p>EVM answers two questions with three numbers: <b>are we over budget, and are we behind schedule?</b></p>
+<div class="scroll"><table class="t"><tr><th class="l">Term</th><th class="l">Plain meaning</th><th class="l">Old name</th></tr>
+<tr><td>BAC</td><td class="l">Total budget for the whole job</td><td class="l">Budget at completion</td></tr>
+<tr><td>PV</td><td class="l">Budget of the work we <i>planned</i> to have done by today</td><td class="l">BCWS</td></tr>
+<tr><td>EV</td><td class="l">Budget of the work we <i>actually</i> have done by today</td><td class="l">BCWP</td></tr>
+<tr><td>AC</td><td class="l">Money we actually spent to get there</td><td class="l">ACWP</td></tr></table></div>
+<div class="note"><b>Memory hook: EV always goes first.</b> Every measure compares what you earned against something. Against cost (AC) → cost measures. Against plan (PV) → schedule measures. Variances subtract, indices divide. Negative or below 1 is bad.</div>
+<div class="f">CV = EV − AC     SV = EV − PV
+CPI = EV / AC    SPI = EV / PV</div>
+<h3>Forecasting the final cost (EAC)</h3>
+<p>Which formula you use depends on <b>why</b> performance is the way it is. The exam always tells you the story; read it for clues.</p>
+<ul>
+<li><b>"Current efficiency continues"</b> → <code>EAC = BAC / CPI</code></li>
+<li><b>"Problem was temporary / resolved, back to planned efficiency (CPI = 1)"</b> → <code>EAC = AC + (BAC − EV)</code></li>
+<li><b>"New detailed / bottom-up estimate of remaining work"</b> → <code>EAC = AC + new ETC</code></li>
+</ul>
+<p><code>ETC = EAC − AC</code> is the money still to spend. <code>BAC − EV</code> is the <i>budgeted</i> value of the work left.</p>
+<h3>Worked example: practice exam Q45</h3>
+<p>BAC $140m, PV $84m, EV $77m, AC $88m. Productivity problem now fixed.</p>
+<div class="f">CV  = 77 − 88 = −$11m    over budget
+SV  = 77 − 84 = −$7m     behind schedule
+CPI = 77/88 = 0.875      earn 87.5c of value per $1 spent
+SPI = 77/84 = 0.917      working at 91.7% of planned rate
+
+Forecast 1: EAC = 140 / 0.875     = $160m
+Forecast 2: EAC = 88 + (140 − 77) = $151m  ← use this: problem resolved</div>
+<h3>Q45e: the "required CPI" step</h3>
+<p>How efficient must the remaining work be to stay under a cap? Divide the work left (in budget dollars) by the money left.</p>
+<div class="f">Work left        = BAC − EV            = 140 − 77        = $63m
+Money available  = cap − AC − net EMV  = 156 − 88 − 1.6  = $66.4m
+Required CPI     = 63 / 66.4 = 0.949</div>
+<p>Then compare: current 0.875 &lt; required 0.949 &lt; expected 1.00. So the cap is achievable <i>only if</i> performance improves as management expects. That sentence is worth the 2 marks.</p>
+<h3>Traps</h3>
+<ul>
+<li>Given only CPI, SPI and PV (2023 Q44)? Work backwards: <code>EV = SPI × PV</code>, then <code>AC = EV / CPI</code>.</li>
+<li>CPI 1.05, SPI 0.85 → under budget, behind schedule. Read each index separately.</li>
+<li>EV is <i>not</i> money spent. That is AC. The MCQ on this appears every year.</li>
+<li>A baseline is only changed through formal change control. You fix variances with corrective action, not by rewriting the baseline.</li>
+</ul>`},
+{t:"2 · Risk and expected monetary value",s:"Q45 c–d, f · MCQs 21–25",h:`
+<p>Risk = likelihood × consequence. In money terms that is the <b>EMV</b>.</p>
+<div class="f">EMV = probability × cost impact
+Threats are +   (they add cost)
+Opportunities are −  (they save cost)</div>
+<h3>Worked example: practice Q45c</h3>
+<div class="f">R1: 0.30 × 8 = +2.4     R2: 0.25 × 6 = +1.5     O1: 0.40 × −3 = −1.2
+Net EMV = 2.4 + 1.5 − 1.2 = +$2.7m
+Risk-adjusted EAC = 151 + 2.7 = $153.7m   ($2.3m under the $156m cap)</div>
+<h3>Comparing responses (Q45d)</h3>
+<p>Each option's expected cost = <b>what you pay for certain</b> + <b>what is still expected to go wrong</b>.</p>
+<div class="f">No response : 0.30 × 8                 = 2.40
+Response A  : 0.90 + 0.08 × 8          = 1.54
+Response B  : 0.40 + 0.30 × 3          = 1.30  ← cheapest, choose B
+Saving vs nothing = 2.40 − 1.30 = $1.10m
+Revised net EMV = 1.30 + 1.50 − 1.20 = 1.60 → EAC = 151 + 1.6 = $152.6m</div>
+<h3>The risk process (MCQ fodder)</h3>
+<p>Plan risk management → <b>identify</b> (brainstorm, checklists, interviews, document review) → <b>qualitative</b> analysis (probability × impact matrix to <i>prioritise</i>) → <b>quantitative</b> (EMV, decision trees, Monte Carlo, tornado diagram) → plan responses → implement → monitor. Everything lives in the <b>risk register</b>, a live document with causes, impacts, owners and responses.</p>
+<div class="scroll"><table class="t"><tr><th class="l">Threat response</th><th class="l">What it means</th><th class="l">Example</th></tr>
+<tr><td class="l"><b>Escalate</b></td><td class="l">Outside the PM's authority or scope</td><td class="l">Hand to the program owner</td></tr>
+<tr><td class="l"><b>Avoid</b></td><td class="l">Change the plan so the risk cannot happen</td><td class="l">Method that bypasses the flood zone</td></tr>
+<tr><td class="l"><b>Mitigate</b></td><td class="l">Reduce probability or impact</td><td class="l">More tests, prototypes, backup supplier, redundancy</td></tr>
+<tr><td class="l"><b>Transfer</b></td><td class="l">Move it to a third party by contract</td><td class="l">Insurance, bonds, warranties</td></tr>
+<tr><td class="l"><b>Accept</b></td><td class="l">Do nothing now, monitor, hold contingency</td><td class="l">Minor weather delays</td></tr></table></div>
+<p>Opportunities: <b>exploit</b> (make sure it happens), <b>enhance</b> (raise its chance), <b>share</b> (partner with someone better placed), <b>accept</b>.</p>
+<p><b>Contingency</b> covers known-unknowns (built from the risk register). <b>Management reserve</b> covers unknown-unknowns and is held by the client, outside the cost baseline.</p>`},
+{t:"3 · Time value of money",s:"Q41 · 13 marks · formula sheet given",h:`
+<p>A dollar today is worth more than a dollar later. Every TVM question is one of four moves: bring a future amount back to today (PV), push today's amount forward (FV), turn a lump sum into equal payments (PMT), or find how many payments (n).</p>
+<div class="note"><b>Step zero, every time:</b> match the rate to the payment period. 6% p.a. paid monthly → <code>i = 0.06/12 = 0.005</code>, 5 years → <code>n = 60</code>. Most lost marks in TVM come from skipping this.</div>
+<h3>Worked example: practice Q41</h3>
+<p>$1m machine, 25% deposit, borrow $750k at 6% p.a. monthly over 5 years. Savings $230k, 250k, 260k, 240k, 220k; resale $180k at year 5; discount rate 8%.</p>
+<div class="f">(a) PMT = i·PV / [1 − (1+i)^−n]
+        = 0.005 × 750,000 / [1 − 1.005^−60]  = $14,499.60 per month
+
+(b) NPV = −1,000,000 + 230k/1.08 + 250k/1.08² + 260k/1.08³
+          + 240k/1.08⁴ + (220k + 180k)/1.08⁵
+        = −1,000,000 + 959,829.52 + 122,504.98 = +$82,334.49
+    NPV &gt; 0 → acceptable
+
+(c) After 24 payments, 36 remain. Balance = PV of those 36:
+    = 14,499.60 × [1 − 1.005^−36] / 0.005 = $476,616.59
+    Principal repaid = 750,000 − 476,616.59 = $273,383.41
+
+(d) Positive NPV says the asset pays off over 5 years. It says nothing
+    about cash: you still need $250k now and $14.5k every month, and
+    owe $476.6k after 2 years. Judge investment and financing separately.</div>
+<h3>Rules to remember</h3>
+<ul>
+<li><b>NPV decision:</b> &gt; 0 proceed, = 0 break even, &lt; 0 reject. Part b) uses the investor's discount rate (8%), not the loan rate.</li>
+<li><b>Outstanding balance</b> = present value of the payments still to come. Never "loan minus payments made".</li>
+<li><b>Interest paid so far</b> = payments made − principal repaid.</li>
+<li><b>Signs:</b> received +, paid −. Write magnitudes and say in words who pays whom.</li>
+<li>Lecture example: $1m at 10% p.a. over 8 years monthly → PMT $15,174.16; balance after 4 years $598,289. Supplier finance at 12% on $950k gives $15,440 > $15,174, so take the bank (the supplier would need a discount over about $66,400 to win).</li>
+<li><b>Payback period</b> (2023 Q41): count months until cumulative inflows reach the investment. Shorter wins. It ignores money after payback and the time value of money.</li>
+</ul>
+<h3>Casio tip</h3>
+<p>Store <code>1.005</code> in memory A. Type <code>0.005×750000÷(1−A^(−60))</code> in one line. Keep at least 6 significant figures until the final answer.</p>`},
+{t:"4 · CPM: the precedence network",s:"Q42 · 8 marks · Tut 1 · MCQs 12–15",h:`
+<p>CPM finds the <b>critical path</b>: the chain of activities with no slack, so any delay on them delays the whole project. You do a forward pass (earliest times), a backward pass (latest times), then the floats.</p>
+<h3>Link types</h3>
+<ul>
+<li><b>FS/x</b> (finish-to-start): successor starts x days after predecessor finishes. Negative x is a <b>lead</b> (overlap); positive is a <b>lag</b> (wait, e.g. concrete curing).</li>
+<li><b>SS/x</b> (start-to-start): successor starts x days after predecessor <i>starts</i>.</li>
+<li><b>FF/x</b> (finish-to-finish): successor cannot finish until x days after predecessor finishes.</li>
+</ul>
+<ol class="steps">
+<li><b>Forward pass.</b> First activity ES = 0 (end-of-day convention). For each activity, check every incoming link and take the <b>largest</b> ES it allows. EF = ES + duration. ES can never go below 0.</li>
+<li><b>Project duration</b> = the largest EF of <i>any</i> activity, not just the last one drawn.</li>
+<li><b>Backward pass.</b> Activities with nothing after them get LF = project end. Work right to left, checking every outgoing link and taking the <b>smallest</b> LF it allows. LS = LF − duration.</li>
+<li><b>Total float</b> TF = LS − ES. TF = 0 → critical. Highlight that chain in red.</li>
+<li><b>Free float</b> FF = the smallest gap on any outgoing link (see Formulas tab). It is how long you can slip without moving any successor.</li>
+</ol>
+<h3>Worked example: practice exam Q42</h3>
+<p>A 6d; B 5d (1SS/2); C 4d (1FS/−1); D 7d (3FS/0, 2FF/4); E 3d (2SS/0, 3FS/1, 4FF/−2).</p>
+<div class="netbox">${NET42}</div>${legendNode}
+<div class="f">Forward
+A: 0 → 6
+B: SS/2 → ES = 0+2 = 2,  EF 7
+C: FS/−1 → ES = 6−1 = 5, EF 9
+D: FS/0 from C → ES ≥ 9;  FF/4 from B → EF ≥ 11 → ES ≥ 4.  ES = 9, EF 16
+E: SS/0 → 2; FS/1 → 10; FF/−2 → EF ≥ 14 → ES ≥ 11.  ES = 11, EF 14
+Project end = max EF = 16 (D), not E's 14
+
+Backward
+E: LF 16, LS 13.  D: LF = min(16, E's LF+2=18) = 16, LS 9
+C: LF = min(LS_D − 0, LS_E − 1) = min(9, 12) = 9
+B: from D FF/4 → LF ≤ 12; from E SS/0 → LS ≤ 13.  LF 12, LS 7
+A: from B SS/2 → LS ≤ 5; from C FS/−1 → LF ≤ 6.   LF 6, LS 0
+
+Critical path A–C–D, 16 days.  B: TF 5, FF 5.  E: TF 2, FF 2.</div>
+<h3>Traps the lecturer sets</h3>
+<ul>
+<li>An FF link can push ES below zero (Tut 1 Q3, 2023 Q45 activity E). Clamp it at 0 and recompute EF.</li>
+<li>With SS links, the predecessor's <i>duration</i> doesn't drive the successor. This matters again in PERT and crashing.</li>
+<li>FF ≤ TF always. An activity with no successors gets FF = project end − EF.</li>
+<li>Many near-critical paths = a high-risk schedule. Near-critical paths become critical if their float is used up.</li>
+</ul>`},
+{t:"5 · PERT: expected duration and probability",s:"Q43 · 8 marks · Tut 2 Q1",h:`
+<p>PERT admits durations are uncertain. Each activity gets three estimates: optimistic <i>o</i>, most likely <i>m</i>, pessimistic <i>p</i>.</p>
+<div class="f">te = (o + 4m + p)/6       σ² = ((p − o)/6)²      ← given on the paper</div>
+<ol class="steps">
+<li>Make a table: o, m, p, te, σ, σ² for every activity.</li>
+<li>Rerun the forward and backward pass using te. Find the expected duration μ and the critical path(s). They can change from the CPM answer.</li>
+<li>Project σ = √(sum of the <b>variances</b> of the critical activities). Never add σ's.</li>
+<li>z = (T − μ)/σ. Look up z in the table (area between the mean and z).</li>
+<li>P(finish by T) = 0.5 + area if T is above μ, 0.5 − area if below.</li>
+</ol>
+<h3>Worked example: practice Q43</h3>
+<div class="f">te:  A 6   B 9   C 4   D 6   E 3        σ²: B 21.78, D 1.00, C 1.00, A 0.11
+New critical paths: A–B–D and A–C–D, μ = 15 days
+
+A–B–D: A→B is SS/2, so A's duration doesn't move B → use B and D only
+   σ² = 21.78 + 1 = 22.78,  σ = 4.77
+z = (16 − 15)/4.77 = 0.21 → table 0.0832
+P(≤ 16 days) = 0.5 + 0.0832 = 58.3%</div>
+<div class="note"><b>Two critical paths?</b> Calculate σ for each and use the path with the <b>largest variance</b>. It gives the lowest (most conservative) probability. Here A–C–D has σ = 1.45, which would give 75.5%, too optimistic. State this assumption in your answer.</div>
+<h3>Other question shapes</h3>
+<ul>
+<li><b>Between two times</b> (e.g. 56 to 63 weeks): find both z values, add the areas if they straddle μ, subtract if both on one side.</li>
+<li><b>Deadline for 90% confidence</b>: need 0.40 above the mean → table gives z ≈ 1.28 → T = μ + 1.28σ. Tut 2 Q1: 24 + 1.28 × 2.54 = 27.25 weeks.</li>
+<li>Tut 2 Q1 also: P(between 24 and 32 weeks) with σ = 2.54 → z = 3.15 → 49.92%.</li>
+</ul>`},
+{t:"6 · Crashing: time–cost trade-off",s:"Q44 · 5 marks · Tut 2 Q3 · MCQs 18–20",h:`
+<p>Crashing buys time with money. Shortening an activity raises <b>direct</b> cost (overtime, more crews), but a shorter project saves <b>indirect</b> cost (overhead per day). The least-cost schedule is where the two balance.</p>
+<div class="f">slope ($/day) = (crash cost − normal cost) / (normal duration − crash duration)</div>
+<ol class="steps">
+<li>Only crash <b>critical</b> activities.</li>
+<li>Pick the cheapest $/day option that actually shortens the project.</li>
+<li>With two or more critical paths you must shorten <b>all of them at once</b>. Compare a shared activity against a combination (one activity per path).</li>
+<li>Crash as many days as possible until an activity hits its crash limit or another path becomes critical. Recompute the network.</li>
+<li>Stop when the next step's $/day exceeds the overhead saved per day, or nothing can be crashed.</li>
+</ol>
+<h3>Worked example: practice Q44</h3>
+<p>PERT network, two critical paths A–B–D and A–C–D, 15 days. Slopes: A $30 (1 day), B $20 (2), C $20 (2), D can't crash, E $20. Overhead $100/day.</p>
+<div class="f">Option "crash A" ($30): A→B is SS/2, so A doesn't drive A–B–D. Only one path shortens → no gain.
+Option "B + C" ($20 + $20 = $40/day): shortens both paths. ✔
+Max days = min(B 2, C 2) = 2 days
+
+Days 15 → 13
+Direct   7,000 + 2 × 40   = 7,080
+Overhead 1,500 − 2 × 100  = 1,300
+Total    8,500 → 8,380</div>
+<p>Tut 2 Q3 runs the full sequence: E (15) → F (35) → G (40) → B+C (55). Each is below the $60/day overhead, so each saves money. The least-cost schedule is 7 days at $3,140. The next step would cost $80/day &gt; $60, so stop.</p>
+<p><b>Fast-tracking</b> is different: overlap activities that would normally run in sequence, which raises risk rather than cost.</p>`},
+{t:"7 · Resource levelling and Burgess",s:"2023 Q47 · Tut 2 Q2 · MCQs 16–17",h:`
+<div class="scroll"><table class="t"><tr><th class="l"></th><th class="l">Resource levelling</th><th class="l">Resource smoothing</th></tr>
+<tr><td class="l">Main constraint</td><td class="l">Resource availability</td><td class="l">Time (end date fixed)</td></tr>
+<tr><td class="l">End date</td><td class="l">May move later</td><td class="l">Never moves</td></tr>
+<tr><td class="l">Critical path</td><td class="l">Can change</td><td class="l">Untouched; shift only within float</td></tr>
+<tr><td class="l">Used when</td><td class="l">Resources over-allocated</td><td class="l">Resources unevenly allocated</td></tr></table></div>
+<h3>Burgess algorithm (one cycle)</h3>
+<p>Goal: make the daily resource profile as flat as possible without extending the project. Flatness is measured by <b>ΣR²</b>, the sum of each day's resource total squared. Lower is smoother.</p>
+<ol class="steps">
+<li>Draw the early-start schedule. List critical activities first, then non-critical ones in order of precedence.</li>
+<li>Compute daily totals R and the starting ΣR².</li>
+<li>Take the <b>last</b> non-critical activity. Shift it right one day at a time, as far as its float and links allow, recording ΣR² for each.</li>
+<li>Keep the position with the lowest ΣR². <b>On a tie, schedule it as late as possible.</b></li>
+<li>Move to the previous non-critical activity and repeat. When you've done the first one, the cycle is complete.</li>
+<li>Answer: reduction = starting ΣR² − final ΣR².</li>
+</ol>
+<p>The full worked 2023 Q47 is in the 2023 solutions tab (427 → 411, reduction 16).</p>`},
+{t:"8 · Cost estimating and cash flow",s:"MCQs 28–29 · 2023 Q42–43",h:`
+<h3>AACE estimate classes</h3>
+<div class="scroll"><table class="t"><tr><th>Class</th><th>Design done</th><th class="l">Used for</th><th class="l">Method</th><th>Accuracy</th></tr>
+<tr><td>5</td><td>0–2%</td><td class="l">Concept screening</td><td class="l">Top-down: analogous, capacity factor, judgement</td><td>−50% / +100%</td></tr>
+<tr><td>4</td><td>1–15%</td><td class="l">Feasibility study</td><td class="l">Top-down: parametric, equipment factored</td><td>wide</td></tr>
+<tr><td>3</td><td>10–40%</td><td class="l">Budget authorisation</td><td class="l">Semi-detailed, hybrid</td><td>−20% / +30%</td></tr>
+<tr><td>2</td><td>30–75%</td><td class="l">Control, bid/tender</td><td class="l">Bottom-up, detailed take-off</td><td>−15% / +20%</td></tr>
+<tr><td>1</td><td>65–100%</td><td class="l">Check estimate, bid, change orders</td><td class="l">Bottom-up, detailed take-off</td><td>−10% / +15%</td></tr></table></div>
+<p><b>Top-down</b> (Class 5): quick and cheap, little information, based on a similar past project. <b>Bottom-up</b> (Class 1): every line item priced from quantities and vendor quotes; slow and costly but accurate.</p>
+<h3>Estimating types</h3>
+<ul>
+<li><b>Analogous</b>: "last similar job cost X", adjusted for size, time and place.</li>
+<li><b>Parametric</b>: quantity × unit rate (m² × $/m²), or capacity factored <code>C_B = C_A (Q_B/Q_A)^e</code>.</li>
+<li><b>Bottom-up</b>: sum every work package from the WBS.</li>
+<li><b>Escalation</b> is construction-specific price rise (steel, cement); <b>inflation</b> is general CPI. Compound it: <code>200 × 1.04⁴ = $234m</code>.</li>
+</ul>
+<h3>Cash flow</h3>
+<ul>
+<li><b>Retention (retainage)</b>: part of each progress payment the principal holds back until the contractor completes properly.</li>
+<li>Payments come about 30 days after billing, minus retention, so the income curve <b>lags</b> the expense S-curve. The gap is the contractor's overdraft.</li>
+<li><b>Direct costs</b> belong to activities (labour, materials, plant). <b>Indirect</b> costs are overheads (site office, admin salaries).</li>
+<li>The <b>cost baseline</b> is the time-phased budget (S-curve) excluding management reserve. It covers project costs only, never later operating costs.</li>
+</ul>`},
+{t:"9 · Theory for the MCQs",s:"About 30 of the 40 MCQs",h:`
+<h3>Projects, programs, portfolios</h3>
+<ul><li><b>Project</b>: temporary, unique, defined start and end. Repetitive ongoing work (weekly testing, maintenance) is <b>operations</b>. Repeated resurfacing contracts are still separate projects: each has its own scope, constraints and dates.</li>
+<li><b>Program</b>: related projects managed together for combined benefit (20 parks under one funding program). Program manager moves resources between projects but can't kill one.</li>
+<li><b>Portfolio</b>: aligned to organisational strategy; may hold unrelated projects. Portfolio manager can start or kill projects.</li></ul>
+<h3>Process groups</h3>
+<div class="scroll"><table class="t"><tr><th class="l">Group</th><th class="l">Key processes</th></tr>
+<tr><td class="l">Initiating</td><td class="l">Develop charter, <b>identify stakeholders</b>, assign PM</td></tr>
+<tr><td class="l">Planning</td><td class="l">PM plan, scope statement, WBS, schedule, cost estimate &amp; budget, risk analysis &amp; responses, stakeholder engagement plan</td></tr>
+<tr><td class="l">Executing</td><td class="l">Direct work, manage quality, acquire/develop/manage team, manage communications, implement risk responses, procurement</td></tr>
+<tr><td class="l">Monitoring &amp; controlling</td><td class="l">Monitor work, <b>integrated change control</b>, control cost/schedule/quality, monitor risks, validate scope</td></tr>
+<tr><td class="l">Closing</td><td class="l">Formal acceptance, lessons learned, archive, release team</td></tr></table></div>
+<p>Over the life cycle: cost and staffing start low, peak, then drop; risk and stakeholder influence are highest at the start. Handling a mid-project change (new legislation) = monitoring &amp; controlling. Change requests are handled through the <b>project management plan</b>. Skipping lessons learned = incomplete closure.</p>
+<h3>Organisation structures</h3>
+<ul><li><b>Functional</b>: PM is just a coordinator; no budget authority. Weakest.</li>
+<li><b>Weak matrix</b>: coordinator keeps schedules but can't make binding resource decisions.</li>
+<li><b>Balanced matrix</b>: PM equal to functional managers → unclear authority, conflicts.</li>
+<li><b>Strong matrix</b>: PM controls budget and schedule; team still has two bosses.</li>
+<li><b>Projectised</b>: PM has full authority; team disbands at the end.</li></ul>
+<p>Matrix problems trace to <b>dual reporting and ambiguous authority</b>. Accountability = authority + responsibility.</p>
+<h3>Charter, scope, WBS</h3>
+<ul><li><b>Charter</b> (initiating): authorises the project, names the PM, high-level objectives. For sponsors. Check it first to see who authorised the work.</li>
+<li><b>Scope statement</b> (planning): detailed deliverables, inclusions, <b>exclusions</b>, acceptance criteria, constraints, assumptions. For the team.</li>
+<li><b>WBS</b>: <b>deliverable/outcome-oriented</b> breakdown of all scope; activities (pour, cure) sit below work packages in the schedule. Work not in the WBS is out of scope. Coding links scope to cost and schedule via cost accounts. 8/80 rule for work package size.</li>
+<li><b>Scope creep</b>: unapproved, undocumented changes. Prevent with documented boundaries and formal change review.</li>
+<li><b>Validate scope</b> with the sponsor, key stakeholders and customer (formal acceptance).</li></ul>
+<h3>Scheduling words</h3>
+<ul><li><b>Lead</b> = overlap (successor starts earlier). <b>Lag</b> = enforced wait.</li>
+<li>Critical path = longest path = shortest possible project time = highest schedule risk. It says nothing about how important the work's <i>function</i> is.</li>
+<li><b>Free float</b> protects the successor's early start. <b>Total float</b> protects the project end date.</li>
+<li>Estimate types: <b>analogous</b> (similar job), <b>parametric</b> (m² × rate), <b>three-point</b> (PERT), bottom-up.</li>
+<li>When estimates change, update the schedule and plans even if the critical path is unaffected.</li></ul>
+<h3>Stakeholders</h3>
+<ul><li>Identify in initiating → record in the <b>stakeholder register</b> → analyse with <b>power/interest grid</b> (high/high = manage closely; high power/low interest = keep satisfied; low/high = keep informed; low/low = monitor), salience model, stakeholder cube.</li>
+<li>Engagement levels: unaware, resistant, neutral, supportive, leading. Current vs desired is recorded in the engagement plan.</li>
+<li>Communication: <b>push</b> (reports, emails to specific people), <b>pull</b> (website, intranet for large audiences), <b>interactive</b> (meetings). Tailor reports to each stakeholder's needs.</li></ul>
+<h3>Delivery methods</h3>
+<ul><li><b>Construct only / Design-Bid-Build</b>: design complete before tender; contractors compete on the same documents. Slow; designer–contractor friction (RFIs, variations).</li>
+<li><b>Design &amp; Construct</b>: one entity designs and builds; owner manages one contract; fast, innovative.</li>
+<li><b>CM at risk</b>: construction manager advises during design, then gives a Guaranteed Maximum Price at ~60–70% design.</li>
+<li><b>DBOM</b>: one consortium designs, builds, operates and maintains, but doesn't finance.</li>
+<li><b>Alliance / IPD</b>: shared pain/gain, collaborative, suited to high-risk uncertain work.</li>
+<li><b>PPP</b>: private partner finances, builds and runs for 20–40 years, then hands back.</li>
+<li><b>Bidder conference</b>: all sellers get the same information so none is favoured.</li></ul>
+<h3>Quality</h3>
+<ul><li><b>Quality</b> = meets requirements. <b>Grade</b> = feature level. Low grade can be fine; low quality never is.</li>
+<li><b>Cost of quality</b>: conformance = <b>prevention</b> (training, procedures) + <b>appraisal</b> (testing, inspection). Non-conformance = <b>internal failure</b> (rework found before handover) + <b>external failure</b> (warranty, found by customer).</li>
+<li><b>PDCA</b>, <b>Kaizen</b> (small continuous improvements), <b>Six Sigma</b> (reduce process variation and defects), <b>JIT</b> (minimal inventory). Prevention over inspection.</li>
+<li>Tools: <b>fishbone</b> (root cause), <b>Pareto</b> (80/20), <b>control chart</b> (is the process stable), <b>scatter</b> (relationship between two variables), affinity diagram. <b>Audit</b> = check processes follow policy. Process improvement = <b>Manage Quality</b>.</li></ul>
+<h3>BIM</h3>
+<ul><li>A 3D model holding graphical and non-graphical information; about information exchange, not just software. "10% technology, 90% sociology."</li>
+<li><b>Clash detection</b> finds clashes between models (ducts vs beams). <b>4D</b> = linked to schedule; <b>5D</b> = cost.</li>
+<li><b>BIM Execution Plan (BEP)</b> sets how BIM is executed, who owns and updates models, how information is exchanged.</li>
+<li>Operations &amp; maintenance is ~80% of a building's life-cycle cost, which is why BIM handover to facilities management matters.</li></ul>
+<h3>Closure</h3>
+<p>Engineering closure (customer sign-off, testing, as-builts) → administrative (documents, lessons learned, archive, release resources) → financial (close work orders, return unused funds).</p>`}
+];
+$("#lessons").innerHTML=LESSONS.map((l,i)=>`<details class="mod" ${l.open?"open":""}><summary><span class="ttl"><h3>${l.t}</h3><span>${l.s}</span></span></summary><div class="body">${l.h}</div></details>`).join("");
+
+/* ---------- MCQ bank ---------- */
+const Q=[
+["P26",1,"Basics","Local government upgrading 20 community parks under one funding program, each with different designs, contractors and schedules. Classify it.",["One large project with multiple subphases","A program made up of related individual projects","A portfolio of unrelated projects","Routine operational maintenance"],1,"Related projects managed together under one umbrella for combined benefit = program. A portfolio is strategy-level and can hold unrelated work."],
+["P26",2,"Basics","Weekly water quality testing at a wastewater plant is not a project because:",["It lacks measurable outputs","It is not in a charter","It is repetitive and ongoing, not temporary or unique","It is low value"],2,"Projects are temporary and unique. Repetitive, ongoing work is operations."],
+["P26",3,"Basics","Halfway through a dam upgrade, new legislation forces redesign; the team analyses impacts and updates the plan. Which process group?",["Initiating","Planning","Executing","Monitoring and Controlling"],3,"Assessing a change and updating the plan during delivery is integrated change control, part of monitoring and controlling."],
+["P26",4,"Basics","A PM in a matrix organisation reports to the sponsor and an engineering head; approvals stall over conflicting priorities. Root cause?",["Lack of stakeholder engagement","Success criteria defined only by client","Ambiguity in authority under a matrix structure","Poor scheduling"],2,"Matrix = two bosses. The textbook weakness is unclear authority and priority conflicts."],
+["P26",5,"Basics","A contractor finishes a bridge but records no lessons learned; the same mistakes recur. This shows:",["Closure was incomplete; organisational learning was lost","Monitoring failed","Execution had no QC","PMO failed on procurement"],0,"Lessons learned are a closing (administrative closure) activity."],
+["P26",6,"Basics","Five years of highway resurfacing contracts, same design and process. Why are they separate projects?",["Different budget cycles","Each has unique constraints, scope and defined start and finish","Projects must change contractors","Repetitive work can never be a project"],1,"Each job is temporary with its own scope, constraints and dates."],
+["P26",7,"Charter & scope","Before design starts you need to confirm who authorised the project and its objectives. Review first:",["Scope statement","Project management plan","Project charter","Stakeholder register"],2,"The charter authorises the project and gives high-level objectives."],
+["P26",8,"Charter & scope","Sponsor wants detailed deliverables, exclusions and acceptance requirements documented during planning. Where?",["Charter","Project scope statement","Business case","Status report"],1,"Scope statement = detailed deliverables, inclusions, exclusions, acceptance criteria."],
+["P26",9,"Charter & scope","A WBS branch lists 'Install scaffolding', 'Pour concrete', 'Cure concrete'. Main concern?",["Too many levels","It is activity-oriented rather than deliverable/outcome-oriented","WBS should include only costs","Construction activities can't appear anywhere"],1,"A WBS is outcome/deliverable-oriented. Activities belong below work packages in the schedule."],
+["P26",10,"Charter & scope","WBS codes (1.0, 1.1, 1.1.1) are linked to the cost estimate and schedule. Main advantage?",["Replaces scheduling","Integrates scope, cost and schedule for project control","Guarantees no scope change","Removes work-package responsibility"],1,"Coding lets cost accounts tie scope, cost, schedule and responsibility together."],
+["P26",11,"Charter & scope","Best practice to reduce uncontrolled scope expansion during delivery:",["Let supervisors approve minor additions informally","Document scope boundaries and require changes to be reviewed","Increase contingency whenever work is requested","Stop talking to stakeholders after baseline"],1,"Scope creep = unapproved, undocumented change. Counter it with clear boundaries and formal change control."],
+["P26",12,"Scheduling","A lead in a schedule is:",["A mandatory waiting period","An overlap letting a successor start earlier than the normal relationship","Total float of a non-critical activity","Time added at the end of the critical path"],1,"Lead = overlap (e.g. FS/−1). Lag = waiting time."],
+["P26",13,"EVM","The contractor wants to rewrite approved durations to hide earlier productivity losses; the PM refuses without formal authorisation. The PM is protecting:",["The performance measurement baseline used to compare actual performance","The resource histogram","The contingency account","The contractor's internal plan"],0,"Baselines are the yardstick. Variances are corrected by action, not by changing the baseline."],
+["P26",14,"Scheduling","Two near-critical paths have 1 and 2 days of float. Why monitor them?",["They can become critical if delays use up their float","They get shorter automatically","Only negative float matters","Float under 5 days is ignored"],0,"Near-critical paths become critical once their float is consumed."],
+["P26",15,"Scheduling","Free float is:",["Time an activity can slip without delaying the early start of an immediate successor","Max delay before the project is delayed","Planned minus actual duration","Extra time given to critical activities"],0,"Free float protects the successor. Total float protects the project end."],
+["P26",16,"Scheduling","The same concrete crew is booked on two simultaneous activities; resource availability is the constraint and the schedule may change. Technique?",["Resource levelling","Crashing","Fast tracking","Scope validation"],0,"Levelling: resource is the constraint, end date may move."],
+["P26",17,"Scheduling","Limited formwork panels; the PM moves non-critical activities within float, keeping the end date. Technique?",["Resource levelling","CPM","Resource smoothing","Crashing"],2,"Smoothing: time is fixed, shift only within float."],
+["P26",18,"Scheduling","After crashing a dam schedule, a previously non-critical path reaches zero float. This shows:",["Over-crashing","Levelling is now needed","Another path has become critical and must be included in further compression","The baseline was invalid"],2,"Once two paths are critical, both must be shortened together."],
+["P26",19,"Scheduling","Two critical activities can each be shortened 3 days: A $4,000/day, B $2,000/day. Budget allows one. Choose:",["A","B","Both","Neither"],1,"Crash the cheapest cost per day first."],
+["P26",20,"Scheduling","When extra resources or overtime shorten critical activities:",["Direct costs fall, overhead rises","Both always fall","Direct costs rise, while shorter duration can reduce time-related overhead","Neither changes"],2,"That is the whole time-cost trade-off."],
+["P26",21,"Risk","During planning the PM lists possible delays from extreme weather and supply chain problems. This is:",["Risk mitigation","Risk identification","Risk response planning","Risk monitoring"],1,"Listing what might happen is identification."],
+["P26",22,"Risk","A document of identified risks, causes, impacts, owners and planned responses is the:",["Charter","Risk register","WBS dictionary","Quality plan"],1,"The risk register is the live record of risks."],
+["P26",23,"Risk","Contractor buys flood insurance. Response type?",["Avoidance","Transfer","Mitigation","Acceptance"],1,"Insurance, bonds and warranties transfer risk to a third party."],
+["P26",24,"Risk","Why combine likelihood and impact in qualitative analysis?",["To get the exact final cost","To prioritise risks for attention and response planning","To remove the risk register","To pick an org structure"],1,"Probability × impact matrix ranks risks."],
+["P26",25,"Risk","A supplier may miss a delivery date, so the contractor lines up a backup supplier in advance. This is:",["Ignoring the risk","Planning a response to reduce the risk's potential effect","Closing the risk","Changing scope"],1,"A pre-arranged backup is a proactive (mitigation/contingency) response."],
+["P26",26,"Stakeholders","After identifying regulators, residents and utilities at initiation, the next step is:",["Record and analyse them as part of stakeholder planning","Send everyone identical updates","Start procurement","Remove those without contractual authority"],0,"Identify → register and analyse → plan engagement."],
+["P26",27,"Stakeholders","Technical teams want detail; the funder wants summary dashboards. The PM should:",["Give identical reports","Tailor communications to each stakeholder's needs","Stop detailed reporting","Send them to the contractors"],1,"The communication plan tailors what, how and how often."],
+["P26",28,"Cost & cash flow","Early feasibility, very little design, historical costs used for an order-of-magnitude estimate. Class?",["Class 1","Class 2","Class 3","Class 5"],3,"Class 5: 0–2% definition, analogous/judgement, concept screening."],
+["P26",29,"Cost & cash flow","The principal withholds part of certified progress payments and releases it later. This is:",["Earned value","Management reserve","Retention or retainage","Escalation"],2,"Retention is held as an incentive to complete properly."],
+["P26",30,"Delivery","Design finished before tender; client wants price competition on the same documents. Method?",["D&C","Alliance","Construct Only","PPP"],2,"Construct Only (Design-Bid-Build)."],
+["P26",31,"Delivery","Owner wants one entity responsible for design and construction, keeping approval rights at key design milestones. Method?",["Design and Construct","Alliance","Construct Only","PPP"],0,"D&C: single contract for design and construction."],
+["P26",32,"Quality","Pump A basic, Pump B premium; both meet all specified requirements. Most accurate?",["A may be lower grade but still acceptable quality","A must be poor quality","B must be higher quality","Quality and grade are the same"],0,"Grade = features; quality = meets requirements. Low grade is fine."],
+["P26",33,"Quality","Rework of misplaced reinforcement found before handover to the client is:",["Prevention cost","Appraisal cost","Internal failure cost","External failure cost"],2,"Found by the project before the customer = internal failure."],
+["P26",34,"Quality","Small ongoing procedure changes using lessons from past projects is:",["QC only","Continuous improvement (Kaizen)","Scope validation","EVM"],1,"Kaizen = small continuous improvements."],
+["P26",35,"Quality","Primary objective of Six Sigma in a precast factory:",["Increase scope","Reduce process variation and defects","More inspections regardless","Replace the quality plan"],1,"Six Sigma targets variation and defects."],
+["P26",36,"BIM","Structural and mechanical models show ducts clashing with beams. Which BIM use finds this?",["4D scheduling","Clash detection","Life-cycle costing","FM handover"],1,"Clash detection."],
+["P26",37,"BIM","Contractors disagree about model ownership, information exchange and update duties. Which document governs this?",["Model coordination report","BIM Execution Plan","LOD diagram","Clash log"],1,"The BEP sets how BIM is executed and who is responsible for information."],
+["P26",38,"EVM","CPI 1.05, SPI 0.85. Performance is:",["Cost favourable, schedule unfavourable","Cost unfavourable, schedule favourable","Both favourable","Both unfavourable"],0,"CPI > 1 under budget; SPI < 1 behind schedule."],
+["P26",39,"EVM","Design problem fixed; management has a new detailed estimate of remaining work that is more reliable than past performance. EAC?",["BAC / SPI","AC + new estimate of remaining work","BAC","EV + PV"],1,"Bottom-up ETC: EAC = AC + new ETC."],
+["P26",40,"EVM","Earned value is:",["Actual money spent","Budgeted value of work actually completed at the reporting date","Budgeted value of work planned by now","Forecast cost of remaining work"],1,"EV = budgeted value of work done. AC = spent; PV = planned."],
+["X23",1,"Basics","Which is FALSE about the initiating process group?",["Cost and staffing start low, rise, then drop near closing","Risk is highest at the start and falls","Stakeholder influence is highest at the start","The PM and team are always identified in initiating"],3,"The PM is assigned at initiation, but the team is acquired later in executing. The other three are true life-cycle statements."],
+["X23",2,"Basics","Which occurs only in the planning process group?",["Identify stakeholders","Develop schedule","Acquire project team","Validate scope"],1,"Identify stakeholders = initiating; acquire team = executing; validate scope = M&C."],
+["X23",3,"Basics","All occur in initiating EXCEPT:",["Creating a project scope statement","Identifying stakeholders","Business case and feasibility review","Assigning the PM"],0,"The scope statement is a planning output."],
+["X23",4,"Basics","Which group completes the work defined in the PM plan to satisfy specifications?",["Planning","Executing","Initiating","Closing"],1,"Executing does the work."],
+["X23",5,"Basics","Tracking, measuring, comparing and regulating performance, and initiating changes, is:",["Monitoring & Controlling","Closing","Initiating","Executing"],0,"That's the definition of M&C."],
+["X23",6,"Basics","The sponsor just signed the charter and assigned you. What first?",["Identify and classify stakeholders","Start the PM plan","Develop the schedule","Create the WBS"],0,"The other initiating process after the charter is Identify Stakeholders."],
+["X23",7,"Basics","Which is NOT an outcome of proper initiation?",["Authorising the PM","Defining the detailed scope","Identifying key stakeholders","Understanding goals and business need"],1,"Detailed scope comes in planning."],
+["X23",8,"Basics","Which is NOT a planning process?",["Create WBS","Qualitative risk analysis","Estimate costs","Develop project team"],3,"Developing the team is executing."],
+["X23",9,"Basics","You inherit a project mid-execution with a flood of change requests. Refer to:",["The previous PM","The charter","The requirements document","The project management plan"],3,"The PM plan contains the change management plan and how changes are processed."],
+["X23",10,"Basics","Stakeholders have formally accepted the project; you finish lessons learned. What next?",["Release the team","Close the contract","Get formal acceptance","Write lessons learned"],0,"Judgement: acceptance and lessons learned are done, so releasing the team is the last closing step.","j"],
+["X23",11,"Charter & scope","Unapproved, undocumented changes that occur when scope changes are not managed are:",["Scope baseline","Residual risks","Scope creep","Variances"],2,"Scope creep."],
+["X23",12,"Charter & scope","To validate the completed deliverables, the PM should go to:",["Sponsor, key stakeholders and customers","The team","QC team","Change control board"],0,"Validate Scope = formal acceptance by sponsor and customer."],
+["X23",13,"Charter & scope","Describing deliverables and work in detail, guiding the team and providing the baseline for changes relies on the:",["Statement of work","Project plan","Charter","Project scope statement"],3,"The detailed scope statement."],
+["X23",14,"Charter & scope","The WBS (with control accounts and work packages) provides hierarchical summation of:",["Cost and schedule","Cost and requirements","Cost, resource and schedule information","Schedule and requirements"],2,"Work packages roll up cost, resources and schedule."],
+["X23",15,"Charter & scope","The sponsor explicitly denied funding for an item; two months later stakeholders ask for it. Best action?",["Add it if impact is small","Tell the stakeholders the work cannot be added","Evaluate impacts on time, cost, etc.","Tell the sponsor immediately"],1,"Judgement: the sponsor has already ruled it out of scope, so decline it. For an ordinary new request, evaluating impact would be right.","j"],
+["X23",16,"Scheduling","To shorten the schedule you move resources from non-critical work to risky critical activities and add paid external resources. This is:",["Crashing","Fast-tracking","Critical chain","Resource levelling"],0,"Adding resources at extra cost to shorten critical activities = crashing."],
+["X23",17,"Scheduling","Which is FALSE about the critical path?",["Longest path through the network","Shortest time to complete the project","Highest schedule risk","Activities on it represent critical functionality"],3,"Critical refers to schedule, not how important the work's function is."],
+["X23",18,"Scheduling","Free float differs from total float because:",["They are the same","Free float affects only the early start of successors","Total float is accumulated free float","TF from CP duration gives FF"],1,"FF looks at the immediate successor; TF at the project end."],
+["X23",19,"Scheduling","Which is TRUE about Estimate Activity Durations?",["Done after Develop Schedule","Padding is fine","Activity duration estimates are outputs","Units don't need to match"],2,"Its output is the duration estimates."],
+["X23",20,"Scheduling","After approval, a team member's revised estimate is longer but doesn't affect the critical path. Best approach?",["Replace the person","Too late to change","Use schedule reserve","Update the schedule and relevant plans"],3,"Estimates are progressively elaborated; keep the schedule current."],
+["X23",21,"Scheduling","WBS, estimates and network diagram are done. Next?",["Develop a preliminary schedule and get team approval","Finalise scope statement","Sequence activities","Develop risk plan"],0,"Network + durations → develop schedule."],
+["X23",22,"Scheduling","Four critical paths and three near-critical paths. Conclusion?",["Will finish on time","The project is at high risk","Needs more people","Should be terminated"],1,"Many critical paths = many ways to be late."],
+["X23",23,"Cost & cash flow","All are inputs to Determine Budget EXCEPT:",["Work performance data","Cost management plan","Activity cost estimates","Project schedule"],0,"Work performance data comes from execution, used in control processes."],
+["X23",24,"Cost & cash flow","Measuring the rooms' square metres and multiplying by a cost factor is:",["Bottom-up","Analogous","Parametric","Three-point"],2,"Quantity × unit rate = parametric."],
+["X23",25,"EVM","SPI 1.2 and CPI 0.9. The project is:",["On track","Behind and over budget","Ahead of schedule and over budget","On schedule, under budget"],2,"SPI > 1 ahead; CPI < 1 over budget."],
+["X23",26,"EVM","EVM is NOT very useful for:",["Measuring progress against baselines","Forecasting final cost and date","Giving variances","Developing the cost baseline"],3,"EVM measures against the baseline; it doesn't create it."],
+["X23",27,"Cost & cash flow","All are true of the cost baseline EXCEPT:",["Time-phased budget for monitoring","Shown as an S-curve","Assigns estimates for future operating costs","Rolls activity costs up to work packages, control accounts, project"],2,"Operating costs after the project aren't in the project cost baseline."],
+["X23",28,"Quality","To see whether temperature and humidity are interdependent, use a:",["Cause and effect diagram","Influence diagram","Scatter diagram","Pareto chart"],2,"A scatter diagram shows the relationship between two variables."],
+["X23",29,"Quality","An SME checks activities comply with policies and finds inefficient processes and gaps. This is a:",["Design of experiments","QC measurement","Audit","Prevention"],2,"Quality audit."],
+["X23",30,"Quality","You see repeated defects across projects, do cause-and-effect analysis and recommend process changes. Process?",["Qualitative risk analysis","Plan quality","Manage project quality","Control quality"],2,"Process improvement / quality assurance = Manage Quality. Control Quality inspects deliverables."],
+["X23",31,"Quality","High quality, no defects, but few features compared with similar products:",["Low quality","Low grade","Inaccurate","Sketchy"],1,"Few features = low grade."],
+["X23",32,"Quality","Which is correct about quality and grade?",["No difference","Neither low grade nor low quality is acceptable","Low quality OK, low grade not","Low quality not acceptable, low grade is"],3,"Low grade may be fine; low quality never is."],
+["X23",33,"Risk","All are inputs to Plan Risk Management EXCEPT:",["Stakeholder register","Charter","Risk register","PM plan"],2,"The risk register is created later, by Identify Risks."],
+["X23",34,"Risk","Prioritising risks with a probability and impact matrix is:",["Qualitative analysis","Quantitative analysis","Sensitivity analysis","EVM"],0,"P×I matrix = qualitative."],
+["X23",35,"Risk","Ordering risks by their source uses:",["Product description","Risk categories","Assumptions","Constraints"],1,"Risk categories (risk breakdown structure)."],
+["X23",36,"Risk","Redundancy, early action, simpler processes, more tests, prototypes are examples of:",["Avoidance","Transfer","Mitigation","Acceptance"],2,"They reduce probability or impact = mitigation."],
+["X23",37,"Risk","Tools of Plan Risk Responses include:",["Risk audits","Avoid, transfer, mitigate, accept","Technical performance measurement","Variance and trend analysis"],1,"The response strategies."],
+["X23",38,"Delivery","Ensuring no seller gets preferential treatment and all have a common understanding of the procurement:",["Source selection criteria","Bidder conference","Independent estimate","Negotiation"],1,"Bidder conference."],
+["X23",39,"Stakeholders","In which process group do you identify stakeholders?",["Initiating","Initiating and planning","All process groups","Planning and M&C"],0,"Judgement: the lecture's process table puts Identify Stakeholders in Initiating, though it is revisited later.","j"],
+["X23",40,"Stakeholders","A tool to assess current vs desired engagement (e.g. 'unaware') of a stakeholder:",["Stakeholder analysis","Issue log","Stakeholder register","Stakeholder management plan"],3,"Judgement: the engagement plan records current and desired engagement levels (the assessment matrix).","j"]
+];
+const topics=["All topics",...[...new Set(Q.map(q=>q[2]))]];
+$("#qTopic").innerHTML=topics.map(t=>`<option>${t}</option>`).join("");
+let qState=store.get("civl-quiz",{}),onlyWrong=false;
+function renderQuiz(){const paper=$("#qPaper").value,topic=$("#qTopic").value;
+ let list=Q.filter(q=>(paper==="all"||q[0]===paper)&&(topic==="All topics"||q[2]===topic));
+ if(onlyWrong)list=list.filter(q=>{const s=qState[q[0]+q[1]];return s!==undefined&&s!==q[5]});
+ let right=0,done=0;Q.forEach(q=>{const s=qState[q[0]+q[1]];if(s!==undefined){done++;if(s===q[5])right++}});
+ $("#qScore").textContent=`${right} / ${done} correct · ${Q.length-done} unanswered`;
+ $("#qWrong").classList.toggle("primary",onlyWrong);$("#qWrong").setAttribute("aria-pressed",onlyWrong);
+ if(!list.length){$("#quiz").innerHTML=`<div class="card"><p>${onlyWrong?"No misses here yet. Answer some questions first, or switch the filter.":"No questions match this filter."}</p></div>`;return}
+ $("#quiz").innerHTML=list.map(q=>{const id=q[0]+q[1],s=qState[id],ans=s!==undefined;
+  const opts=q[4].map((o,i)=>{let c="opt";if(ans){if(i===q[5])c+=" right";else if(i===s)c+=" wrong"}
+   return `<button type="button" class="${c}" data-q="${id}" data-i="${i}" ${ans?"disabled":""}><span class="k">${"abcd"[i]}</span><span>${o}</span></button>`}).join("");
+  return `<div class="card q"><div class="qh"><span class="qn">${q[0]==="P26"?"2026 practice":"2023 exam"} · Q${q[1]}</span><span class="pill">${q[2]}</span>${q[7]?'<span class="pill">judgement</span>':""}${ans?(s===q[5]?'<span class="pill ok">correct</span>':'<span class="pill crit">missed</span>'):""}</div><p><b>${q[3]}</b></p><div class="opts">${opts}</div>${ans?`<div class="why">${q[6]}</div>`:""}</div>`}).join("");
+ $("#quiz").querySelectorAll(".opt:not([disabled])").forEach(b=>b.addEventListener("click",()=>{qState[b.dataset.q]=+b.dataset.i;store.set("civl-quiz",qState);
+  const y=window.scrollY;renderQuiz();window.scrollTo({top:y})}));}
+$("#qPaper").addEventListener("change",renderQuiz);$("#qTopic").addEventListener("change",renderQuiz);
+$("#qWrong").addEventListener("click",()=>{onlyWrong=!onlyWrong;renderQuiz()});
+$("#qReset").addEventListener("click",()=>{qState={};store.set("civl-quiz",qState);renderQuiz()});
+renderQuiz();
+
+/* ---------- number drills ---------- */
+const R=(a,b,st=1)=>a+st*Math.floor(Math.random()*((b-a)/st+1));
+const phi=z=>{const t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2);let p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p};
+function gen(el,title,sub,make){const box=$(el);let cur=null;
+ function draw(){cur=make();box.innerHTML=`<div class="eyebrow">${sub}</div><h3>${title}</h3><p>${cur.q}</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" type="button" data-a="new">New problem</button><button class="btn" type="button" data-a="show">Reveal answer</button></div><div class="ans" hidden>${cur.a}</div>`;
+  box.querySelector('[data-a="new"]').onclick=draw;box.querySelector('[data-a="show"]').onclick=()=>{box.querySelector(".ans").hidden=false}}
+ draw();}
+gen("#g-evm","Earned value","Drill 1 · Q45a–b",()=>{const BAC=R(80,400,10),PV=Math.round(BAC*R(30,70)/100),EV=Math.round(PV*R(78,115)/100),AC=Math.round(EV*R(85,125)/100);
+ const CPI=EV/AC,SPI=EV/PV;return{q:`BAC = $${BAC}m, PV = $${PV}m, EV = $${EV}m, AC = $${AC}m. Find CV, SV, CPI, SPI and say what they mean. Then EAC if current cost efficiency continues, EAC if remaining work goes to plan, and ETC for each.`,
+ a:`CV  = ${EV} − ${AC} = ${EV-AC}   (${EV-AC<0?"over budget":"under budget"})
+SV  = ${EV} − ${PV} = ${EV-PV}   (${EV-PV<0?"behind schedule":"ahead of schedule"})
+CPI = ${EV}/${AC} = ${CPI.toFixed(3)}
+SPI = ${EV}/${PV} = ${SPI.toFixed(3)}
+EAC (CPI continues) = ${BAC}/${CPI.toFixed(3)} = ${(BAC/CPI).toFixed(2)}   ETC = ${(BAC/CPI-AC).toFixed(2)}
+EAC (back to plan)  = ${AC} + (${BAC} − ${EV}) = ${AC+BAC-EV}   ETC = ${BAC-EV}`}});
+gen("#g-emv","Risk response by EMV","Drill 2 · Q45c–d",()=>{const p=R(15,45,5),I=R(3,12),pa=R(3,10),ca=R(3,12)/10,cb=R(2,8)/10,ib=Math.max(1,I-R(2,6));
+ const n=p/100*I,a=ca+pa/100*I,b=cb+p/100*ib;const best=Math.min(n,a,b);const name=best===n?"No response":best===a?"Response A":"Response B";
+ return{q:`Risk R: ${p}% chance of +$${I}m. Response A costs $${ca.toFixed(1)}m for certain and cuts the probability to ${pa}%. Response B costs $${cb.toFixed(1)}m for certain, probability stays ${p}%, impact drops to $${ib}m. Which is cheapest on expected value, and what is the saving?`,
+ a:`No response: ${p/100} × ${I} = ${n.toFixed(2)}
+Response A : ${ca.toFixed(1)} + ${pa/100} × ${I} = ${a.toFixed(2)}
+Response B : ${cb.toFixed(1)} + ${p/100} × ${ib} = ${b.toFixed(2)}
+Choose ${name}. Saving vs no response = ${(n-best).toFixed(2)}m`}});
+gen("#g-tvm","Loan repayment and balance","Drill 3 · Q41",()=>{const P=R(200,1500,50)*1000,r=R(4,12),y=R(3,10),k=R(1,y-1)*12;const i=r/100/12,n=y*12;
+ const pmt=i*P/(1-Math.pow(1+i,-n)),bal=pmt*(1-Math.pow(1+i,-(n-k)))/i;
+ return{q:`Borrow $${P.toLocaleString("en-AU")} at ${r}% p.a. compounded monthly, repaid monthly over ${y} years. Find the monthly payment, the balance right after payment ${k}, and the principal repaid so far.`,
+ a:`i = ${r}/100/12 = ${i.toFixed(6)},  n = ${n}
+PMT = i·PV / [1 − (1+i)^−n] = $${fmt(pmt)}
+Balance after ${k} = PV of remaining ${n-k} payments
+        = ${fmt(pmt)} × [1 − (1+i)^−${n-k}] / i = $${fmt(bal)}
+Principal repaid = ${P.toLocaleString("en-AU")} − ${fmt(bal)} = $${fmt(P-bal)}
+Interest paid so far = ${k} × ${fmt(pmt)} − ${fmt(P-bal)} = $${fmt(k*pmt-(P-bal))}`}});
+gen("#g-pert","PERT probability","Drill 4 · Q43b",()=>{const k=R(3,5);let rows=[],mu=0,v=0;for(let j=0;j<k;j++){const o=R(2,8),m=o+R(1,5),p=m+R(1,10);const te=(o+4*m+p)/6,va=((p-o)/6)**2;mu+=te;v+=va;rows.push(`${"ABCDE"[j]}: o=${o} m=${m} p=${p}`)}
+ const s=Math.sqrt(v),T=Math.round(mu+R(-2,3)),z=(T-mu)/s,zr=Math.round(z*100)/100,P=phi(zr);
+ return{q:`Critical path, all FS links: ${rows.join(";  ")} (days). Find the expected duration, σ, and the probability of finishing within ${T} days.`,
+ a:`μ = Σ te = ${mu.toFixed(2)} days
+σ² = Σ variances = ${v.toFixed(3)},  σ = ${s.toFixed(3)}
+z = (${T} − ${mu.toFixed(2)}) / ${s.toFixed(3)} = ${zr.toFixed(2)}
+table(${Math.abs(zr).toFixed(2)}) ≈ ${Math.abs(P-0.5).toFixed(4)}
+P(≤ ${T}) = 0.5 ${zr>=0?"+":"−"} ${Math.abs(P-0.5).toFixed(4)} = ${(P*100).toFixed(1)}%`}});
+
+/* ---------- 2023 solutions ---------- */
+const PAPERS=[
+{t:"Q41 · Payback period (5 marks)",h:`
+<p>Project 1: invest $250,000; $75,000 in year 1, then $25,000 per quarter. Project 2: payback 35 months.</p>
+<div class="f">After 12 months: recovered 75,000; still owed 250,000 − 75,000 = 175,000
+175,000 / 25,000 per quarter = 7 quarters = 21 months
+Payback (Project 1) = 12 + 21 = 33 months  &lt;  35 months (Project 2)</div>
+<p><b>Recommend Project 1.</b> State assumptions: cash flows arrive evenly/at period ends; payback ignores the time value of money and any cash after payback, so it is a screening measure only.</p>`},
+{t:"Q42 · Class 5 vs Class 1 estimates (10 marks)",h:`
+<p><b>Top-down (Class 5)</b>: order-of-magnitude estimate made with 0–2% of design defined, using analogous projects, capacity-factored or parametric models and judgement. Quick and cheap, accuracy about −50% / +100%. Use it at concept screening or early feasibility, to decide whether an idea deserves further study, when no design exists.</p>
+<p><b>Bottom-up (Class 1)</b>: definitive estimate made with 65–100% of design, from detailed quantity take-offs, unit costs, crew productivity and firm vendor quotes for every work package. Slow and costly, accuracy about −10% / +15%. Use it for check estimates, bids/tenders and pricing change orders, once the design is essentially complete.</p>
+<p>For full marks add the trade-off: accuracy rises with design maturity and with the effort and cost of the estimate. Mention AACE's link between project definition and accuracy range.</p>`},
+{t:"Q43 · Refinery order-of-magnitude estimate (10 marks)",h:`
+<div class="f">a) Remove atypical item: 150 − 7.5 = $142.5m  (Sydney, 2013, 300k bbl/d)
+b) Size: 142.5 × (400/300)^0.65 = 142.5 × 1.2056 = $171.80m
+c) Inflation 2013→2024 (11 years at 8%): 171.80 × 1.08^11 = 171.80 × 2.3316 = $400.58m
+d) Location: 400.58 × (282.33/278.14) = 400.58 × 1.01506 = $406.61m
+e) Add pollution equipment (2024 $): 406.61 + 6.5 = $413.11m
+f) Reduce weather contingency by 1%: 413.11 × 0.99 = $408.98m
+
+Estimate ≈ $409 million (2024, Brisbane)</div>
+<p>Order matters: strip atypical costs first, then scale size, then time, then location; add new items in target-year dollars last. State your assumption on applying the 1% to the final total.</p>`},
+{t:"Q44 · ETC from CPI and SPI (5 marks)",h:`
+<div class="f">BAC = 900,000  CPI = 1.1  SPI = 0.9  PV = 600,000
+EV  = SPI × PV  = 0.9 × 600,000 = 540,000
+AC  = EV / CPI  = 540,000 / 1.1 = 490,909
+EAC = BAC / CPI = 900,000 / 1.1 = 818,182
+ETC = EAC − AC  = 327,273   (= (BAC − EV)/CPI = 360,000/1.1)</div>
+<p>Assumption: current cost efficiency continues (the project is "running well"). If you assumed the remainder goes to plan instead, ETC = BAC − EV = $360,000. State which.</p>`},
+{t:"Q45 · Precedence network with lags (8 marks)",h:`
+<p>A 3, B 9, C 5, D 11 (no predecessors); E 10 (1FF/6); F 7 (1FF/7, 3FF/7); G 4 (1SS/8, 2SS/11, 4FF/4, 5SS/4, 6SS/6).</p>
+<div class="netbox">${NET23}</div>${legendNode}
+<div class="f">Forward
+A 0–3, B 0–9, C 0–5, D 0–11
+E: FF/6 from A → EF ≥ 9 → ES = −1 → clamp to 0, EF 10
+F: FF/7 from A → EF ≥ 10; FF/7 from C → EF ≥ 12 → ES 5, EF 12
+G: SS/8 → 8; SS/11 → 11; FF/4 from D → EF ≥ 15 → ES ≥ 11; SS/4 from E → 4; SS/6 from F → 11
+   ES 11, EF 15.   Project = 15 days
+
+Backward (end = 15)
+G 11–15.  F: SS/6 → LS ≤ 5 → 5–12.  E: SS/4 → LS ≤ 7, but LF ≤ 15 → 5–15
+D: FF/4 → LF ≤ 11 → 0–11.  C: FF/7 into F → LF ≤ 5 → 0–5.  B: SS/11 → LS ≤ 0 → 0–9
+A: FF/6 → LF ≤ 9; FF/7 → LF ≤ 5; SS/8 → LS ≤ 3 (LF ≤ 6) → LF 5, LS 2
+
+Floats: A TF 2, FF 1 (gap to E: 10 − 3 − 6).  E TF 5, FF 5 (to project end).
+Critical (TF 0): B, C, D, F, G → chains B–G, C–F–G, D–G</div>`},
+{t:"Q46 · PERT on the lag network (14 marks)",h:`
+<div class="scroll"><table class="t"><tr><th>Task</th><th>o</th><th>m</th><th>p</th><th>te</th><th>σ</th><th>σ²</th></tr>
+<tr><td>1 A</td><td>4</td><td>3</td><td>7</td><td>3.83</td><td>0.50</td><td>0.250</td></tr>
+<tr><td>2 B</td><td>5</td><td>9</td><td>13</td><td>9.00</td><td>1.33</td><td>1.778</td></tr>
+<tr class="cp"><td>3 C</td><td>3</td><td>5</td><td>9</td><td>5.33</td><td>1.00</td><td>1.000</td></tr>
+<tr><td>4 D</td><td>8</td><td>11</td><td>13</td><td>10.83</td><td>0.83</td><td>0.694</td></tr>
+<tr><td>5 E</td><td>5</td><td>10</td><td>13</td><td>9.67</td><td>1.33</td><td>1.778</td></tr>
+<tr class="cp"><td>6 F</td><td>4</td><td>7</td><td>9</td><td>6.83</td><td>0.83</td><td>0.694</td></tr>
+<tr class="cp"><td>7 G</td><td>3</td><td>4</td><td>6</td><td>4.17</td><td>0.50</td><td>0.250</td></tr></table></div>
+<div class="f">a) Rerun with te:
+   C–F–G: F EF = 5.33 + 7 = 12.33 → ES 5.50 → G ES = 11.50 → EF 15.67
+   B–G:   G ES ≥ 11 → EF 15.17          D–G: G EF ≥ 10.83 + 4 = 14.83
+   Expected duration 15.67 ≈ 16 days, critical chain C–F–G
+   σ² = 1.000 + 0.694 + 0.250 = 1.944,  σ = 1.39 ≈ 1.4 days
+   (B–G: only G counts after the SS link, σ = 0.5; D–G: only D, σ = 0.83)
+
+b) P(13 ≤ T ≤ 19) on C–F–G:
+   z₁ = (13 − 15.67)/1.394 = −1.91 → 0.4719
+   z₂ = (19 − 15.67)/1.394 = +2.39 → 0.4916
+   P = 0.4719 + 0.4916 = 96.4%
+
+c) P(T ≤ 15): C–F–G z = −0.48 → 0.5 − 0.1844 = 31.6%
+              B–G   z = −0.33 → 36.9%     D–G z = +0.20 → 57.9%
+   Minimum confidence ≈ 31.6% (governed by C–F–G)</div>
+<p>The question invites "multiple answers": state that you used exact te values and that SS links remove the predecessor's variance from a chain. If you instead round te to whole days, durations match Q45 and the project is 15 days.</p>`},
+{t:"Q47 · Burgess levelling, one cycle (8 marks)",h:`
+<p>Resources/day: A 2, B 1, C 1, D 1, E 2, F 2, G 3. Critical B, C, D, F, G stay put. Non-critical in precedence order: A, E. Start with the last one, E.</p>
+<div class="scroll"><table class="t"><tr><th class="l">Schedule</th>${Array.from({length:16},(_, i)=>`<th>${i+1}</th>`).join("")}<th>ΣR²</th></tr>
+<tr><td class="l">Start (early)</td><td>7</td><td>7</td><td>7</td><td>5</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>3</td><td>5</td><td>3</td><td>3</td><td>3</td><td>0</td><td><b>427</b></td></tr>
+<tr><td class="l">E +1</td><td>5</td><td>7</td><td>7</td><td>5</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>5</td><td>3</td><td>3</td><td>3</td><td>0</td><td>419</td></tr>
+<tr><td class="l">E +2</td><td>5</td><td>5</td><td>7</td><td>5</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>3</td><td>3</td><td>3</td><td>0</td><td>419</td></tr>
+<tr><td class="l">E +3</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>5</td><td>3</td><td>3</td><td>0</td><td>411</td></tr>
+<tr><td class="l">E +4</td><td>5</td><td>5</td><td>5</td><td>3</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>5</td><td>5</td><td>3</td><td>0</td><td>411</td></tr>
+<tr><td class="l"><b>E +5 ✔</b></td><td>5</td><td>5</td><td>5</td><td>3</td><td>3</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>5</td><td>5</td><td>5</td><td>0</td><td>411</td></tr>
+<tr><td class="l">A +1</td><td>3</td><td>5</td><td>5</td><td>5</td><td>3</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>5</td><td>5</td><td>5</td><td>0</td><td>411</td></tr>
+<tr><td class="l"><b>A +2 ✔</b></td><td>3</td><td>3</td><td>5</td><td>5</td><td>5</td><td>6</td><td>6</td><td>6</td><td>6</td><td>5</td><td>5</td><td>7</td><td>5</td><td>5</td><td>5</td><td>0</td><td><b>411</b></td></tr></table></div>
+<ul><li>E can move up to 5 days (TF 5). E+3, +4, +5 tie at 411 → tie rule: schedule as late as possible → <b>E starts day 6</b>.</li>
+<li>A can move up to 2 days (SS/8 into G caps its start at 3; FF/7 into F caps its finish at 5). Both tie at 411 → <b>A starts day 3</b>.</li>
+<li><b>ΣR² falls from 427 to 411: a reduction of 16.</b> Days 1–3 drop from 7 to 3–5; one peak of 7 remains on day 12.</li></ul>`}
+];
+$("#papers").innerHTML=PAPERS.map(p=>`<details class="mod"><summary><span class="ttl"><h3>${p.t}</h3></span></summary><div class="body">${p.h}</div></details>`).join("");
+</script>
+
+</body></html>
